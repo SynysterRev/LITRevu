@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{%  block content %}
+    <form method="POST" novalidate>
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Connexion</button>
+    </form>
+{% endblock content %}
