@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from authentication.forms import SignupForm
@@ -15,6 +16,7 @@ def signup(request):
             return redirect(settings.LOGIN_REDIRECT_URL)
     return render(request, 'authentication/signup.html', context={'form': form})
 
+@login_required
 def home(request):
     photo_data = {
         'photo_1': 'https://picsum.photos/seed/1/300/200',

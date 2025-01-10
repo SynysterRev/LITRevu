@@ -1,8 +1,38 @@
 {% extends 'base.html' %}
-{%  block content %}
-    <form method="POST" novalidate>
-    {{ form.as_p }}
-    {% csrf_token %}
-    <button type="submit">Connexion</button>
-    </form>
+{% block content %}
+    <div class="test">
+        <h2>Bonjour</h2>
+    </div>
+    <div class="flex space-x-12">
+        <div class="flex flex-col justify-center mt-8 border-solid border-zinc-500 border-4">
+            <h2 class="text-3xl text-center mt-8">Inscrivez-vous maintenant</h2>
+            <a href="{% url 'signup' %}" class="justify-center">S'inscrire</a>
+        </div>
+        <div class="flex flex-col mt-8 justify-end">
+            <h2 class="text-3xl text-center mt-8">Connectez-vous</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="border-solid border-zinc-500 border-4">Se connecter</button>
+            </form>
+        </div>
+    </div>
+    {#    <div class="flex justify-center mt-8">#}
+    {#        <form method="POST" novalidate>#}
+    {#            {% csrf_token %}#}
+    {#            <div class="flex flex-col space-y-4">#}
+    {#                <input type="text" id="username" placeholder="Nom d'utilisateur" required minlength="3"#}
+    {#                       class="border border-gray-800 placeholder: text-center leading-7" size="30"/>#}
+    {#                <input type="password" id="username" placeholder="Mot de passe"#}
+    {#                       class="border border-gray-800 placeholder: text-center leading-7" size="30"/>#}
+    {#                <div class="border border-gray-800 placeholder: text-center leading-7" >{{ form.password }}</div>#}
+    {#            {{ form.as_p }}#}
+    {#                {% for field in form %}#}
+    {#                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" size="30" class="border#}
+    {#                    border-gray-800 placeholder: text-center leading-7" placeholder="{{ field.name }}">#}
+    {#                {% endfor %}#}
+    {#                <button type="submit">Connexion</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
 {% endblock content %}

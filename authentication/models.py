@@ -33,5 +33,5 @@ class UserFollows(models.Model):
 
 class User(AbstractUser):
 
-    profile_picture = models.ImageField(default='default_profile.png')
+    profile_picture = models.ImageField(default='default_profile.png', upload_to='profile_pictures/')
     followed = models.ManyToManyField(settings.AUTH_USER_MODEL, through=UserFollows)

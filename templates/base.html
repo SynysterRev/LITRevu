@@ -2,21 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>LITRevu</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/output.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/input.css' %}" type="text/css">
 </head>
 <header class="border-solid border-b-2 border-zinc-500 mb-4 flex bg-slate-500">
     <div class="flex flex-1 justify-between items-center">
     <div class="flex-1"></div>
     <h2 class="flex-1 text-3xl my-2 text-center text-white">LITRevu</h2>
-    <nav class="flex-1 space-x-4 flex justify-end">
+{#    {% if request.user.is_authenticated %}#}
+    <nav class="flex-1 space-x-4 flex justify-end hidden">
         <a href=""> Flux</a>
         <a href=""> Posts</a>
-        <a href=""> Abonnements</a>
-        <a href=""> Se déconnecter</a>
+        <a href="" class="!hidden"> Abonnements</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Se déconnecter</button>
+        </form>
         <a></a>
     </nav>
+{#    {% endif %}#}
     </div>
 </header>
 <body>
