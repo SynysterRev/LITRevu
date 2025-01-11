@@ -1,0 +1,111 @@
+.header-container {
+    display: flex;
+    flex: 1;
+    justify-content: end;
+    background-color: darkgray;
+    align-items: center;
+    position: relative;
+    height: 3rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.site-title {
+    left: 50%;
+    position: absolute;
+}
+
+.site-nav {
+    display: flex;
+    gap: 10px;
+    font-size: 1.2rem;
+    align-items: center;
+    height: 3rem;
+}
+
+.site-nav a {
+    color: black;
+    text-decoration: none;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.site-nav a:hover {
+    background-color:navajowhite;
+    border: none;
+    border-radius: 10px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color:navajowhite;
+}
+
+.login-container {
+    display: flex;
+    margin-top: 7rem;
+    justify-content: space-between;
+}
+
+.login-signup {
+    padding-left: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-login {
+    padding-right: 20%;
+}
+
+.link-as-button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    background-color: buttonface;
+    text-decoration: none;
+    color: black;
+}
+
+.link-as-button:hover {
+    background-color:navajowhite;
+}
+
+.link-as-button:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+.login-input {
+    border: 1px solid;
+}
+
+.group {
+    position: relative;
+}
+
+.group>label {
+  padding:0 0.2em;
+  position:absolute;
+  top:-0.5em;
+  left:1em;
+  background-color:white;
+}
+.group>input{
+  padding:0.8em;
+  outline:none;
+}

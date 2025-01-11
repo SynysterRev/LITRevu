@@ -7,23 +7,21 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/input.css' %}" type="text/css">
 </head>
-<header class="border-solid border-b-2 border-zinc-500 mb-4 flex bg-slate-500">
-    <div class="flex flex-1 justify-between items-center">
-    <div class="flex-1"></div>
-    <h2 class="flex-1 text-3xl my-2 text-center text-white">LITRevu</h2>
-{#    {% if request.user.is_authenticated %}#}
-    <nav class="flex-1 space-x-4 flex justify-end hidden">
-        <a href=""> Flux</a>
-        <a href=""> Posts</a>
-        <a href="" class="!hidden"> Abonnements</a>
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Se déconnecter</button>
-        </form>
-        <a></a>
-    </nav>
-{#    {% endif %}#}
-    </div>
+<header>
+    <div class="header-container">
+        <h2 class="site-title">LITRevu</h2>
+        {% if request.user.is_authenticated %}
+            <nav class="site-nav">
+                <a href="{% url 'home' %}"> Flux</a>
+                <a href=""> Posts</a>
+                <a href=""> Abonnements</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Se déconnecter</button>
+                </form>
+            </nav>
+            </div>
+        {% endif %}
 </header>
 <body>
 {% block content %}{% endblock content %}

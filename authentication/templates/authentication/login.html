@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="test">
-        <h2>Bonjour</h2>
-    </div>
-    <div class="flex space-x-12">
-        <div class="flex flex-col justify-center mt-8 border-solid border-zinc-500 border-4">
-            <h2 class="text-3xl text-center mt-8">Inscrivez-vous maintenant</h2>
-            <a href="{% url 'signup' %}" class="justify-center">S'inscrire</a>
+    <div class="login-container">
+        <div class="login-signup">
+            <h2 style="margin-bottom: 2rem">Inscrivez-vous maintenant</h2>
+            <a href="{% url 'signup' %}" class="link-as-button">S'inscrire</a>
         </div>
-        <div class="flex flex-col mt-8 justify-end">
-            <h2 class="text-3xl text-center mt-8">Connectez-vous</h2>
-            <form method="POST">
+        <div class="login-login">
+            <h2 style="margin-bottom: 2rem">Connectez-vous</h2>
+            <form method="POST" novalidate>
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="border-solid border-zinc-500 border-4">Se connecter</button>
+                {% for field in form %}
+                {{ field }}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endfor %}
+                <button type="submit">Se connecter</button>
             </form>
         </div>
     </div>
