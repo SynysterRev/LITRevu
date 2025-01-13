@@ -160,7 +160,7 @@ button:hover {
     border: none;
     border-radius: 10px;
     padding: 5px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     cursor: pointer;
     width: 8rem;
     margin-top: 1rem;
@@ -183,4 +183,41 @@ button:hover {
 
 li {
     margin: 5px 0;
+}
+
+.input-title {
+    border: 1px solid;
+    margin-top: 1rem;
+    line-height: 2.5rem;
+    font-size: 1.2rem;
+    padding-left: 5px;
+}
+
+.image-download-button {
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1.2rem;
+    margin-right: 10px;
+    background-color: buttonface;
+    text-decoration: none;
+    color: black;
+    align-self: flex-start;
+}
+
+.image-download-button:hover {
+    background-color:navajowhite;
+}
+
+.submit-button {
+    min-width: 8rem;
+    margin-top: 1rem;
+    line-height: 2rem;
+    font-size: 1.2rem;
+}
+
+.text-area-ticket {
+    resize: none;
+    font-size: 1.2rem;
+    padding: 5px 0 0 5px;
 }
