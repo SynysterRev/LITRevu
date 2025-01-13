@@ -14,8 +14,10 @@
 }
 
 .site-title {
-    left: 50%;
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .site-nav {
@@ -41,12 +43,17 @@
     border-radius: 10px;
 }
 
+.site-nav button {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
 button {
     border: none;
     border-radius: 10px;
     padding: 5px;
     font-size: 1rem;
-    margin-right: 10px;
+    cursor: pointer;
 }
 
 button:hover {
@@ -60,14 +67,14 @@ button:hover {
 }
 
 .login-signup {
-    padding-left: 20%;
+    padding-left: 35%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .login-login {
-    padding-right: 20%;
+    padding-right: 35%;
 }
 
 .link-as-button {
@@ -90,12 +97,28 @@ button:hover {
     color: inherit;
 }
 
-.login-input {
+.input {
     border: 1px solid;
+    width: 15rem;
 }
 
 .group {
     position: relative;
+    margin-top: 1rem;
+}
+
+/*.group .error-list:not(:empty) ~ .input {*/
+/*    margin-bottom: 0;*/
+/*}*/
+
+.login-login button {
+    padding: 10px;
+    align-self: flex-end;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
 .group>label {
@@ -108,4 +131,56 @@ button:hover {
 .group>input{
   padding:0.8em;
   outline:none;
+}
+
+.signup-title {
+    text-align: center;
+    margin-top: 6rem;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.signup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.signup-buttons button {
+    width: 8rem;
+    margin-top: 1rem;
+}
+
+.signup-buttons a {
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    width: 8rem;
+    margin-top: 1rem;
+    background-color: buttonface;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+.signup-buttons a:hover {
+    background-color:navajowhite;
+}
+
+.error-list {
+    list-style-type: none;
+    color: red;
+    margin-left: 5px;
+    max-width: 15rem;
+}
+
+li {
+    margin: 5px 0;
 }

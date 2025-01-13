@@ -1,5 +1,5 @@
 <div class="group">
-    <label>{{ widget.attrs.placeholder }}</label>
-    <input type="text" id="id_{{ widget.name }}"
-           name="{{ widget.name }}" class="login-input"/>
+    <label for="id_{{ widget.name }}">{{ widget.attrs.placeholder }}</label>
+    <input type="{{ widget.attrs.type }}" id="id_{{ widget.name }}"
+           name="{{ widget.name }}" class="input"/>
 </div>

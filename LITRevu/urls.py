@@ -24,7 +24,7 @@ from authentication.forms import LoginForm
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('signup/', authentication.views.signup, name='signup'),
-    path('login/', LoginView.as_view(
+    path('', LoginView.as_view(
         template_name='authentication/login.html',
         authentication_form=LoginForm,
     ), name='login'),

@@ -1,33 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2 class="text-3xl text-center mt-8">Inscrivez-vous</h2>
-    <div class="flex justify-center mt-8">
-        <form method="POST">
+    <h2 class="signup-title">Inscrivez-vous</h2>
+    <div class="signup-form">
+        <form method="POST" class="form" novalidate>
             {% csrf_token %}
-            <div class="flex flex-col space-y-4">
             {% for field in form %}
                 {{ field }}
-                {% endfor %}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+            <div class="signup-buttons">
+                <a href='{% url 'login' %}'>Retour</a>
+                <button type="submit">S'inscrire</button>
             </div>
-        <button type="submit">Créer le compte</button>
         </form>
     </div>
-{#    <div class="flex justify-center mt-8">#}
-{#        <form method="POST" novalidate>#}
-{#            {% csrf_token %}#}
-{#            <div class="flex flex-col space-y-4">#}
-{#                <input type="text" id="username" placeholder="Nom d'utilisateur" required minlength="3"#}
-{#                       class="border border-gray-800 placeholder: text-center leading-7" size="30"/>#}
-{#                <input type="password" id="username" placeholder="Mot de passe"#}
-{#                       class="border border-gray-800 placeholder: text-center leading-7" size="30"/>#}
-{#                <div class="border border-gray-800 placeholder: text-center leading-7" >{{ form.password }}</div>#}
-{#            {{ form.as_p }}#}
-{#                {% for field in form %}#}
-{#                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" size="30" class="border#}
-{#                    border-gray-800 placeholder: text-center leading-7" placeholder="{{ field.name }}">#}
-{#                {% endfor %}#}
-{#                <button type="submit">Connexion</button>#}
-{#            </div>#}
-{#        </form>#}
-{#    </div>#}
+    {#    <div class="flex justify-center mt-8">#}
+    {#        <form method="POST" novalidate>#}
+    {#            {% csrf_token %}#}
+    {#            <div class="flex flex-col space-y-4">#}
+    {#                <input type="text" id="username" placeholder="Nom d'utilisateur" required minlength="3"#}
+    {#                       class="border border-gray-800 placeholder: text-center leading-7" size="30"/>#}
+    {#                <input type="password" id="username" placeholder="Mot de passe"#}
+    {#                       class="border border-gray-800 placeholder: text-center leading-7" size="30"/>#}
+    {#                <div class="border border-gray-800 placeholder: text-center leading-7" >{{ form.password }}</div>#}
+    {#            {{ form.as_p }}#}
+    {#                {% for field in form %}#}
+    {#                    <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" size="30" class="border#}
+    {#                    border-gray-800 placeholder: text-center leading-7" placeholder="{{ field.name }}">#}
+    {#                {% endfor %}#}
+    {#                <button type="submit">Connexion</button>#}
+    {#            </div>#}
+    {#        </form>#}
+    {#    </div>#}
 {% endblock content %}
