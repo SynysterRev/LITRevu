@@ -1,0 +1,15 @@
+    <div class="signup-form">
+        <form method="POST" class="form" style="min-width: 30%" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+                {{ field }}
+                <ul class="error-list">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+            <button type="submit" style="align-self: flex-end; margin-bottom: 50px;"
+                    class="submit-button">Envoyer</button>
+        </form>
+    </div>

@@ -1,18 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1 style="text-align: center; margin-top: 3rem;">Créez un ticket</h1>
-    <div class="signup-form">
-        <form method="POST" class="form" style="min-width: 30%" novalidate enctype="multipart/form-data">
-            {% csrf_token %}
-            {% for field in form %}
-                {{ field }}
-                <ul class="error-list">
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endfor %}
-            <button type="submit" style="align-self: flex-end;" class="submit-button">Envoyer</button>
-        </form>
-    </div>
+    {% include 'review/partials/ticket.html' with form=form %}
 {% endblock content %}

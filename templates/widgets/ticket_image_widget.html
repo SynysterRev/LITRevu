@@ -1,19 +1,28 @@
 <label style="font-size: xx-large; margin: 1rem 0">{{ widget.attrs.placeholder }}</label>
+<div style="width: 100%; max-width: 600px; max-height: 600px; padding-bottom: 5px;">
+    <img src="{{ widget.value.url }}" alt="" id="image_dl" width="auto" height="100%">
+</div>
 <label for="id_{{ widget.name }}" class="image-download-button">Télécharger fichier</label>
 <input type="file" id="id_{{ widget.name }}"
        name="{{ widget.name }}" style="display: none" class="image-download-button">
-<p id="fileName" style="margin-top: 3px">Fichier sélectionné :</p>
 
-  <script>
+<!-- Use to display the selected file name under the download button
+    and the image above it -->
+<script>
     const fileInput = document.getElementById('id_{{ widget.name }}');
-    const fileName = document.getElementById('fileName');
+    const image = document.getElementById('image_dl');
 
-    fileInput.addEventListener('change', function() {
-      const selectedFile = fileInput.files[0];
-      if (selectedFile) {
-        fileName.textContent = `Fichier sélectionné : ${selectedFile.name}`;
-      } else {
-        fileName.textContent = 'Fichier sélectionné :';
-      }
+    fileInput.addEventListener('change', function () {
+        const selectedFile = fileInput.files[0];
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                image.alt = `Preview de ${selectedFile.name}`
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            image.alt = ''
+        }
     });
-  </script>
+</script>

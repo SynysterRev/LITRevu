@@ -1,4 +1,4 @@
-from django.forms import Widget, ClearableFileInput
+from django.forms import Widget, ClearableFileInput, TextInput, CharField
 from django.template import loader
 from django.utils.safestring import mark_safe
 
@@ -12,7 +12,7 @@ class InputWidget(Widget):
         return mark_safe(template)
 
 
-class TitleInputWidget(Widget):
+class TitleInputWidget(TextInput):
     template_name = 'widgets/title_widget.html'
 
     def render(self, name, value, attrs=None, renderer=None):

@@ -34,6 +34,9 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('home/', authentication.views.home, name='home'),
     path('ticket/create', review.views.ticket_create, name='ticket_create'),
+    path('review/create', review.views.review_create, name='review_create'),
+    path('ticket/<int:ticket_id>/', review.views.ticket_view, name='ticket_view'),
+    path('ticket/<int:ticket_id>/edit/', review.views.ticket_edit, name='ticket_edit'),
 ]
 
 if settings.DEBUG:
