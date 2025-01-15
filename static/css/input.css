@@ -264,3 +264,20 @@ li {
     gap: 1rem;
     margin: 0 1rem 1rem 0;
 }
+
+.review-edit {
+     border: 1px solid black;
+}
+
+.review-ticket-preview{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1rem
+}
+
+.review-ticket-preview-img {
+    width: 100%;
+    max-width: 400px;
+    max-height: 400px;
+    padding: 1.5rem;
+}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 style="text-align: center; margin-top: 3rem;">Modifier votre critique</h1>
+    <div class="signup-form">
+    <div class="form" style="width: 30%">
+        <div class="review-border" style="padding:0">
+            <h3>Vous êtes en train de poster en réponse à</h3>
+            <div class="review-border" style="margin: 2rem;padding: 0">
+                <div class="review-ticket-preview">
+                    <p>{{ ticket.user }} a demandé une critique</p>
+                    <p style="margin-left: auto;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
+                </div>
+                <p style="margin-top: 1.5rem">{{ ticket.title }}</p>
+                <p style="margin-top: 1.5rem">{{ ticket.description }}</p>
+                <img src="{{ ticket.image.url }}" alt="{{ ticket.image.name }}" class="review-ticket-preview-img">
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="signup-form" style="margin-top: 0;margin-bottom: 3rem;">
+        <form method="POST" class="form" style="width: 30%" enctype="multipart/form-data">
+            <div class="review-border" style="border-top: 0;">
+                {% csrf_token %}
+                {% include 'review/partials/review.html' with form=edit_form %}
+                <button type="submit" style="align-self: flex-end;"
+                        class="submit-button">Envoyer
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

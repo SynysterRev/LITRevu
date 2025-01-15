@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 
 from . import forms
-from .models import Ticket
+from .models import Ticket, Review
 
 
 @login_required
@@ -17,22 +17,24 @@ def ticket_create(request):
             return redirect('home')
     return render(request, 'review/create_ticket.html', context={'form': form})
 
+
 @login_required
 def ticket_view(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     return render(request, 'review/view_posts.html', {'ticket': ticket})
+
 
 @login_required
 def ticket_edit(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
     edit_form = forms.TicketForm(instance=ticket)
     if request.method == "POST":
-        if 'edit_ticket' in request.POST:
-            edit_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
-            if edit_form.is_valid():
-                edit_form.save()
-                return redirect('home')
+        edit_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('home')
     return render(request, 'review/edit_ticket_page.html', context={'edit_form': edit_form})
+
 
 @login_required
 def review_create(request):
@@ -52,3 +54,15 @@ def review_create(request):
             return redirect('home')
     context = {'review_form': review_form, 'ticket_form': ticket_form}
     return render(request, 'review/create_review.html', context=context)
+
+@login_required
+def review_edit(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    edit_form = forms.ReviewForm(instance=review)
+    if request.method == "POST":
+        edit_form = forms.ReviewForm(request.POST, request.FILES, instance=review)
+        if edit_form.is_valid():
+            edit_form.save()
+            return redirect('home')
+    context = {'edit_form': edit_form, 'ticket': review.ticket}
+    return render(request, 'review/edit_review_page.html', context=context)

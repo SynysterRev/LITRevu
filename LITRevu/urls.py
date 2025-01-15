@@ -37,6 +37,7 @@ urlpatterns = [
     path('review/create', review.views.review_create, name='review_create'),
     path('ticket/<int:ticket_id>/', review.views.ticket_view, name='ticket_view'),
     path('ticket/<int:ticket_id>/edit/', review.views.ticket_edit, name='ticket_edit'),
+    path('review/<int:review_id>/edit/', review.views.review_edit, name='review_edit'),
 ]
 
 if settings.DEBUG:

@@ -3,7 +3,7 @@
     <p>{% for group, options, index in widget.optgroups %}</p>
         {% for option in options %}
             <input type="{{ option.type }}" name="{{ option.name }}" id="{{ option.id }}"
-                   value="{{ option.value }}">
+                   value="{{ option.value }}" {% if option.selected %}checked="checked"{% endif %}>
             <label for="{{ option.id }}" style="margin-right:2rem;margin-left: 0.8rem">{{ option.label }}</label>
         {% endfor %}
     {% endfor %}
