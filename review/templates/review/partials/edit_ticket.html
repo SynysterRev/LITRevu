@@ -1,0 +1,13 @@
+{% load review_extras %}
+<div class="ticket-preview">
+    <form method="POST" class="form" style="min-width: 30%">
+        <h3 style="margin: 1rem 0 2rem 0;">Vous avez publié un ticket</h3>
+        <p style="align-self: flex-end;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
+        <h3 style="margin-bottom: 2rem;">{{ ticket.title }}</h3>
+        <img src="{{ ticket.image.url }}" alt="{{ ticket.image.name }}">
+        <div class="ticket-preview-buttons">
+            <button type="submit" name="modify_{{ post.id }}" class="submit-button">Modifier</button>
+            <button type="submit" name="delete_{{ post.id }}" class="submit-button">Supprimer</button>
+        </div>
+    </form>
+</div>

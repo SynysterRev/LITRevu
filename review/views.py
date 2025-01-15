@@ -32,16 +32,23 @@ def ticket_edit(request, ticket_id):
             if edit_form.is_valid():
                 edit_form.save()
                 return redirect('home')
-    return render(request, 'review/edit_ticket.html', context={'edit_form': edit_form})
+    return render(request, 'review/edit_ticket_page.html', context={'edit_form': edit_form})
 
 @login_required
 def review_create(request):
-    form = forms.ReviewForm()
+    review_form = forms.ReviewForm()
+    ticket_form = forms.TicketForm()
     if request.method == "POST":
-        form = forms.ReviewForm(request.POST, request.FILES)
-        if form.is_valid():
-            review = form.save(commit=False)
+        review_form = forms.ReviewForm(request.POST, request.FILES)
+        ticket_form = forms.TicketForm(request.POST, request.FILES)
+        if all([review_form.is_valid(), ticket_form.is_valid()]):
+            review = review_form.save(commit=False)
+            ticket = ticket_form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
             review.user = request.user
+            review.ticket = ticket
             review.save()
             return redirect('home')
-    return render(request, 'review/create_review.html', context={'form': form})
+    context = {'review_form': review_form, 'ticket_form': ticket_form}
+    return render(request, 'review/create_review.html', context=context)

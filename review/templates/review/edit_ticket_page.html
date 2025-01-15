@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="text-align: center; margin-top: 3rem;">Créez un ticket</h1>
+    <h1 style="text-align: center; margin-top: 3rem;">Modifier votre ticket</h1>
     <div class="signup-form">
         <form method="POST" class="form" style="min-width: 30%" enctype="multipart/form-data">
             {% csrf_token %}
-            {% include 'review/partials/ticket.html' with form=form %}
+            {% include 'review/partials/ticket.html' with form=edit_form %}
             <button type="submit" style="align-self: flex-end; margin-bottom: 50px;"
                     class="submit-button">Envoyer
             </button>

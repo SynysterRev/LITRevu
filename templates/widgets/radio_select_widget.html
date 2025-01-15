@@ -1,0 +1,10 @@
+<label style="font-size: xx-large; margin: 2rem 0">{{ widget.attrs.title }}</label>
+<div class="radio-control">
+    <p>{% for group, options, index in widget.optgroups %}</p>
+        {% for option in options %}
+            <input type="{{ option.type }}" name="{{ option.name }}" id="{{ option.id }}"
+                   value="{{ option.value }}">
+            <label for="{{ option.id }}" style="margin-right:2rem;margin-left: 0.8rem">{{ option.label }}</label>
+        {% endfor %}
+    {% endfor %}
+</div>

@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1 style="text-align: center; margin-top: 3rem;">{{ ticket.title }}</h1>
-    <p><a href="{% url 'ticket_edit' ticket.id %}">Modifier le billet</a></p>
-    <img src="{{ ticket.image.url }}">
-    <p>{{ ticket.description }}</p>
+{#    <h1 style="text-align: center; margin-top: 3rem;">{{ ticket.title }}</h1>#}
+    <div class="post-container">
+    {% include 'review/partials/edit_ticket.html'%}
+        </div>
+{#    <p><a href="{% url 'ticket_edit' ticket.id %}">Modifier le billet</a></p>#}
+{#    <img src="{{ ticket.image.url }}">#}
+{#    <p>{{ ticket.description }}</p>#}
 {% endblock content %}
