@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load review_extras %}
 {% block content %}
     <h1 style="text-align: center; margin-top: 3rem;">Modifier votre critique</h1>
     <div class="signup-form">
@@ -7,7 +8,7 @@
             <h3>Vous êtes en train de poster en réponse à</h3>
             <div class="review-border" style="margin: 2rem;padding: 0">
                 <div class="review-ticket-preview">
-                    <p>{{ ticket.user }} a demandé une critique</p>
+                    <p>{% get_poster_display ticket.user %} demandé une critique</p>
                     <p style="margin-left: auto;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
                 </div>
                 <p style="margin-top: 1.5rem">{{ ticket.title }}</p>
