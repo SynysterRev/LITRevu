@@ -27,6 +27,8 @@ def ticket_view(request, ticket_id):
 @login_required
 def ticket_edit(request, ticket_id):
     ticket = get_object_or_404(Ticket, id=ticket_id)
+    if ticket.user != request.user:
+        return redirect('home')
     edit_form = forms.TicketForm(instance=ticket)
     if request.method == "POST":
         edit_form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
