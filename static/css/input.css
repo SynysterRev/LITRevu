@@ -211,7 +211,7 @@ li {
 
 .submit-button {
     min-width: 8rem;
-    margin-top: 1rem;
+    /*margin-top: 1rem;*/
     line-height: 2rem;
     font-size: 1.2rem;
 }
@@ -256,11 +256,13 @@ li {
     width: 35%;
     margin: 0 auto;
     border: 1px solid black;
+    border-bottom: 0;
 }
 
 .ticket-preview-buttons {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     gap: 1rem;
     margin: 0 1rem 1rem 0;
 }
@@ -280,4 +282,11 @@ li {
     max-width: 400px;
     max-height: 400px;
     padding: 1.5rem;
+}
+
+.link-edit {
+    padding: 8px;
+    font-size: 1.3rem;
+    text-align: center;
+    min-width: 8rem;
 }

@@ -1,10 +1,15 @@
 {% extends 'base.html' %}
+{% load review_extras %}
 {% block content %}
-{#    <h1 style="text-align: center; margin-top: 3rem;">{{ ticket.title }}</h1>#}
-    <div class="post-container">
-    {% include 'review/partials/edit_ticket.html'%}
+    <h2 style="text-align: center; margin: 3rem 0;">Vos posts</h2>
+    {% for instance in page_obj %}
+        <div class="post-container" style="{% if forloop.last %}margin-bottom: 2rem;
+            border-bottom: 1px solid black;{% endif %}">
+            {% if instance|model_type == 'Review' %}
+                {% include 'review/partials/posts_review.html' with review=instance %}
+            {% elif instance|model_type == 'Ticket' %}
+                {% include 'review/partials/posts_ticket.html' with ticket=instance %}
+            {% endif %}
         </div>
-{#    <p><a href="{% url 'ticket_edit' ticket.id %}">Modifier le billet</a></p>#}
-{#    <img src="{{ ticket.image.url }}">#}
-{#    <p>{{ ticket.description }}</p>#}
+    {% endfor %}
 {% endblock content %}

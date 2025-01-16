@@ -1,0 +1,29 @@
+{% load review_extras %}
+<div class="ticket-preview">
+    <div class="form" style="min-width: 30%">
+        <h3 style="margin: 1rem 0 2rem 0;">Vous avez publié une critique</h3>
+        <p style="align-self: flex-end;margin-right: 1rem">{{ review.time_created|date:'H:i, d F Y' }}</p>
+        <h3 style="margin-bottom: 2rem;">{{ review.headline }} - {% for star in review.rating|range_filter %}*
+        {% endfor %}</h3>
+        <p>{{ review.body }}</p>
+        <div class="review-border" style="margin: 2rem;padding: 0">
+            <div class="review-ticket-preview">
+                <p>Ticket - {{ review.ticket.user }} </p>
+                <p style="margin-left: auto;margin-right: 1rem">{{ review.ticket.time_created|date:'H:i, d F Y' }}</p>
+            </div>
+            <p style="margin-top: 1.5rem">{{ review.ticket.title }}</p>
+            <img src="{{ review.ticket.image.url }}" alt="{{ review.ticket.image.name }}"
+                 class="review-ticket-preview-img">
+        </div>
+        <div class="ticket-preview-buttons">
+            <a href="{% url 'review_edit' review.id %}" class="link-as-button link-edit">Modifier</a>
+            <form method="post" action="{% url 'review_delete' review.id %}">
+                {% csrf_token %}
+                <button type="submit" class="submit-button"
+                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette critique ?');">
+                    Supprimer
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

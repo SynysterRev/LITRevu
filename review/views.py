@@ -1,9 +1,30 @@
+from itertools import chain
+
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 
-from . import forms
+from . import forms, models
 from .models import Ticket, Review
 
+
+@login_required
+def home(request):
+    photo_data = {
+        'photo_1': 'https://picsum.photos/seed/1/300/200',
+        'photo_2': 'https://picsum.photos/seed/2/300/400',
+        'photo_3': 'https://picsum.photos/seed/3/300/300',
+        'photo_4': 'https://picsum.photos/seed/4/300/300',
+        'photo_5': 'https://picsum.photos/seed/5/300/300',
+        'photo_6': 'https://picsum.photos/seed/6/300/300',
+        'photo_7': 'https://picsum.photos/seed/7/300/400',
+        'photo_8': 'https://picsum.photos/seed/8/300/300',
+        'photo_9': 'https://picsum.photos/seed/9/300/200',
+        'photo_10': 'https://picsum.photos/seed/10/300/100',
+        'photo_11': 'https://picsum.photos/seed/11/300/400',
+        'photo_12': 'https://picsum.photos/seed/12/300/400',
+    }
+    return render(request, 'review/home.html', photo_data)
 
 @login_required
 def ticket_create(request):
@@ -68,3 +89,31 @@ def review_edit(request, review_id):
             return redirect('home')
     context = {'edit_form': edit_form, 'ticket': review.ticket}
     return render(request, 'review/edit_review_page.html', context=context)
+
+@login_required
+def view_posts(request):
+    reviews = models.Review.objects.filter(user=request.user).order_by('-time_created')
+    tickets = models.Ticket.objects.filter(user=request.user).order_by('-time_created')
+    reviews_and_tickets = sorted(chain(reviews, tickets), key=lambda x: x.time_created, reverse=True)
+    paginator = Paginator(reviews_and_tickets, 5)
+    number_page = request.GET.get('page')
+    page_obj = paginator.get_page(number_page)
+
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, 'review/view_posts.html', context=context)
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id, user=request.user)
+    if request.method == "POST":
+        review.delete()
+        return redirect('posts_view')
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id, user=request.user)
+    if request.method == "POST":
+        ticket.delete()
+        return redirect('posts_view')

@@ -32,12 +32,16 @@ urlpatterns = [
         authentication_form=LoginForm,
     ), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('home/', authentication.views.home, name='home'),
+    path('home/', review.views.home, name='home'),
+    path('posts/', review.views.view_posts, name='posts_view'),
     path('ticket/create', review.views.ticket_create, name='ticket_create'),
     path('review/create', review.views.review_create, name='review_create'),
     path('ticket/<int:ticket_id>/', review.views.ticket_view, name='ticket_view'),
     path('ticket/<int:ticket_id>/edit/', review.views.ticket_edit, name='ticket_edit'),
+    path('ticket/<int:ticket_id>/delete/', review.views.delete_ticket, name='ticket_delete'),
     path('review/<int:review_id>/edit/', review.views.review_edit, name='review_edit'),
+    path('review/<int:review_id>/delete/', review.views.delete_review, name='review_delete'),
+
 ]
 
 if settings.DEBUG:
