@@ -1,0 +1,11 @@
+{% load review_extras %}
+<div class="review-border" style="margin: 2rem;padding: 0">
+    <div class="review-ticket-preview">
+        <p>{% if answer %} {% get_poster_display ticket.user %} demandé une critique {% elif not answer %}Ticket -
+            {{ ticket.user }}{% endif %} </p>
+        <p style="margin-left: auto;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
+    </div>
+    <p style="margin-top: 1.5rem">{{ ticket.title }}</p>
+    <img src="{{ ticket.image.url }}" alt="{{ ticket.image.name }}"
+         class="review-ticket-preview-img">
+</div>

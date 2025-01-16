@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from . import forms, models
 from .models import Ticket, Review
+from authentication.models import User, UserFollows
 
 
 @login_required
@@ -26,6 +27,7 @@ def home(request):
     }
     return render(request, 'review/home.html', photo_data)
 
+
 @login_required
 def ticket_create(request):
     form = forms.TicketForm()
@@ -39,10 +41,10 @@ def ticket_create(request):
     return render(request, 'review/create_ticket.html', context={'form': form})
 
 
-@login_required
-def ticket_view(request, ticket_id):
-    ticket = get_object_or_404(Ticket, id=ticket_id)
-    return render(request, 'review/view_posts.html', {'ticket': ticket})
+# @login_required
+# def ticket_view(request, ticket_id):
+#     ticket = get_object_or_404(Ticket, id=ticket_id)
+#     return render(request, 'review/view_posts.html', {'ticket': ticket})
 
 
 @login_required
@@ -57,6 +59,14 @@ def ticket_edit(request, ticket_id):
             edit_form.save()
             return redirect('home')
     return render(request, 'review/edit_ticket_page.html', context={'edit_form': edit_form})
+
+
+@login_required
+def delete_ticket(request, ticket_id):
+    ticket = get_object_or_404(models.Ticket, id=ticket_id, user=request.user)
+    if request.method == "POST":
+        ticket.delete()
+        return redirect('posts_view')
 
 
 @login_required
@@ -78,6 +88,24 @@ def review_create(request):
     context = {'review_form': review_form, 'ticket_form': ticket_form}
     return render(request, 'review/create_review.html', context=context)
 
+
+@login_required
+def review_answer_create(request, ticket_id):
+    ticket = get_object_or_404(Ticket, id=ticket_id)
+    review_form = forms.ReviewForm()
+    if request.method == "POST":
+        review_form = forms.ReviewForm(request.POST, request.FILES)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.user = request.user
+            review.ticket = ticket
+            review.save()
+            print(review)
+            return redirect('home')
+    context = {'review_form': review_form, 'ticket': ticket}
+    return render(request, 'review/create_review_answer.html', context=context)
+
+
 @login_required
 def review_edit(request, review_id):
     review = get_object_or_404(Review, id=review_id)
@@ -89,6 +117,15 @@ def review_edit(request, review_id):
             return redirect('home')
     context = {'edit_form': edit_form, 'ticket': review.ticket}
     return render(request, 'review/edit_review_page.html', context=context)
+
+
+@login_required
+def delete_review(request, review_id):
+    review = get_object_or_404(models.Review, id=review_id, user=request.user)
+    if request.method == "POST":
+        review.delete()
+        return redirect('posts_view')
+
 
 @login_required
 def view_posts(request):
@@ -104,16 +141,19 @@ def view_posts(request):
     }
     return render(request, 'review/view_posts.html', context=context)
 
-@login_required
-def delete_review(request, review_id):
-    review = get_object_or_404(models.Review, id=review_id, user=request.user)
-    if request.method == "POST":
-        review.delete()
-        return redirect('posts_view')
 
 @login_required
-def delete_ticket(request, ticket_id):
-    ticket = get_object_or_404(models.Ticket, id=ticket_id, user=request.user)
-    if request.method == "POST":
-        ticket.delete()
-        return redirect('posts_view')
+def following_users(request):
+    following = request.user.followed.all()
+    followers = request.user.followed_by.all()
+    followers_usernames = [follower.username for follower in followers]
+    context = {
+        'following': following,
+        'followers': followers_usernames,
+    }
+    return render(request, 'review/following.html', context=context)
+
+# @login_required
+# def review_view(request, review_id):
+#     review = get_object_or_404(models.Review, id=review_id)
+#     return render(request, 'review/view_posts.html', {'review': review})

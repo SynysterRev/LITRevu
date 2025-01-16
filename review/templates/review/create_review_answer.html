@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 style="text-align: center; margin-top: 3rem;">Créez une critique</h1>
+    <div class="signup-form" style="margin-left: 1rem;">
+        <form method="POST" class="form" style="min-width: 30%" enctype="multipart/form-data">
+            <div class="review-border">
+                <h2>Vous êtes en train de poster en réponse à </h2>
+                {% csrf_token %}
+                {% include 'review/partials/ticket_preview.html' with ticket=ticket answer=True %}
+            </div>
+            <div class="review-border" style="margin-bottom: 25px;border-top: 0;">
+                <h2 style="font-size: xx-large;margin-bottom: 3rem; transform: translateX(-1rem)">Critique</h2>
+                {% include 'review/partials/review.html' with form=review_form %}
+                <button type="submit" style="align-self: flex-end; margin-bottom: 25px;"
+                        class="submit-button">Envoyer
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

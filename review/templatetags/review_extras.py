@@ -11,7 +11,7 @@ def model_type(instance):
 def get_poster_display(context, user):
     if user == context['user']:
         return "vous avez"
-    return user.username + "a"
+    return user.username + " a"
 
 @register.filter
 def range_filter(value):

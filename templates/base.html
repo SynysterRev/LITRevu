@@ -14,7 +14,7 @@
             <nav class="site-nav">
                 <a href="{% url 'home' %}"> Flux</a>
                 <a href="{% url 'posts_view' %}"> Posts</a>
-                <a href=""> Abonnements</a>
+                <a href="{% url 'following' %}"> Abonnements</a>
                 <form method="post" action="{% url 'logout' %}">
                     {% csrf_token %}
                     <button type="submit">Se déconnecter</button>
