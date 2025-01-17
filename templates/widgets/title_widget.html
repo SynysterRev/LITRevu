@@ -1,4 +1,4 @@
 <label for="id_{{ widget.name }}" style="font-size: xx-large">{{ widget.attrs.title }}</label>
-<input type="{{ widget.attrs.type }}" id="id_{{ widget.name }}"
+<input type="{{ widget.attrs.type_input }}" id="id_{{ widget.name }}"
        name="{{ widget.name }}" class="input-title" value="{% if widget.value %}{{ widget.value }}{% endif %}"
        maxlength={{ widget.attrs.max_length }}/>

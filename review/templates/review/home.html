@@ -1,53 +1,18 @@
 {% extends 'base.html' %}
+{% load review_extras %}
 {% block content %}
-    <div class="h-screen flex justify-center items-center">
-        <div class="w-3/5 m-auto">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow shadow-lg" src="{{ photo_1 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_2 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg " src="{{ photo_3 }}" alt="">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_4 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_5 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_6 }}" alt="">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_7 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_8 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_9 }}" alt="">
-                    </div>
-                </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="{{ photo_10 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_11 }}" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg shadow" src="{{ photo_12 }}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="home-create-buttons">
+        <a href="{% url 'ticket_create' %}" class="link-as-button">Demander une critique</a>
+        <a href="{% url 'review_create' %}" class="link-as-button">Créer une critique</a>
     </div>
+    {% for instance in page_obj %}
+        <div class="post-container" style="{% if forloop.last %}margin-bottom: 2rem;
+            border-bottom: 1px solid black;{% endif %}">
+            {% if instance|model_type == 'Review' %}
+                {% include 'review/partials/posts_review.html' with review=instance %}
+            {% elif instance|model_type == 'Ticket' %}
+                {% include 'review/partials/posts_ticket.html' with ticket=instance %}
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endblock content %}
