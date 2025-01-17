@@ -1,13 +1,11 @@
 from django import forms
 
+from authentication.models import User
 from review import models
-from widgets.widgets import TitleInputWidget, TextAreaWidget, TicketImageWidget, RadioSelectWidget
+from widgets.widgets import TitleInputWidget, TextAreaWidget, TicketImageWidget, RadioSelectWidget, InputSearchWidget
 
 
 class TicketForm(forms.ModelForm):
-    edit_ticket = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-
     class Meta:
         model = models.Ticket
         fields = ['title', 'description', 'image']
@@ -24,9 +22,6 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    edit_review = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-
-
     class Meta:
         model = models.Review
         fields = ['headline', 'rating', 'body']
@@ -46,3 +41,28 @@ class ReviewForm(forms.ModelForm):
             (4, '4'),
             (5, '5'),
         ], attrs={'title': "Note"})
+
+
+class FollowUserForm(forms.Form):
+    username = forms.CharField(max_length=100,
+                               widget=InputSearchWidget(attrs={'placeholder': "Nom d'utilisateur", 'type_input': "text",
+                                                               'max_length': '100'}))
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise forms.ValidationError("L'utilisateur %(username)s n'existe pas.", code='not_found',
+                                        params={'username': username})
+        if user == self.user:
+            raise forms.ValidationError("Vous ne pouvez pas vous suivre vous-même.", code='invalid')
+
+        following = self.user.followed.all()
+        if user in following:
+            raise forms.ValidationError("Vous suivez déjà cet utilisateur.", code='already_followed')
+        return user

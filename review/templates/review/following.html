@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 style="text-align: center; margin-top: 3rem;">Suivre d'autres utilisateurs</h1>
+    <form method="POST" class="following-container" novalidate>
+        {% csrf_token %}
+        <div class="search-user-container">
+            <div class="field-container">
+                {% for field in form %}
+                    <div class="input-group">
+                        {{ field }}
+                        <ul class="error-list">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" style="align-self: flex-end; margin-left: auto"
+                    class="submit-button">Envoyer
+            </button>
+        </div>
+    </form>
+    <h1 style="text-align: center; margin-top: 3rem;">Abonnements</h1>
+    <div class="following-container">
+        {% for follow in following %}
+            <div class="following-grid">
+                <div>{{ follow.username }}</div>
+                <div style="display:flex; justify-content: center">
+                    <form method="post" action="{% url 'unfollow' follow.username %}">
+                        {% csrf_token %}
+                        <button type="submit" class="submit-button">
+                            Désabonner
+                        </button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <h1 style="text-align: center; margin-top: 3rem;">Abonnés</h1>
+    <div class="following-container">
+        {% for follower in followers %}
+            <div class="follower">
+                <div>{{ follower }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

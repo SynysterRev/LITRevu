@@ -4,9 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 
+from authentication.models import User
 from . import forms, models
 from .models import Ticket, Review
-from authentication.models import User, UserFollows
 
 
 @login_required
@@ -146,12 +146,29 @@ def view_posts(request):
 def following_users(request):
     following = request.user.followed.all()
     followers = request.user.followed_by.all()
-    followers_usernames = [follower.username for follower in followers]
+    followers_usernames = [follower.user.username for follower in followers]
+    form = forms.FollowUserForm(user=request.user)
+    if request.method == "POST":
+        form = forms.FollowUserForm(request.POST, user=request.user)
+        if form.is_valid():
+            user = get_object_or_404(User, username=form.cleaned_data['username'])
+            request.user.followed.add(user)
+            return redirect('following')
     context = {
         'following': following,
         'followers': followers_usernames,
+        'form': form,
     }
+
     return render(request, 'review/following.html', context=context)
+
+@login_required
+def unfollow_user(request, username):
+    followed_user = get_object_or_404(User, username=username)
+    if request.method == "POST":
+        request.user.followed.remove(followed_user)
+        return redirect('following')
+    # followed_user
 
 # @login_required
 # def review_view(request, review_id):
