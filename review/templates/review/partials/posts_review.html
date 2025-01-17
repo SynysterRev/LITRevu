@@ -1,14 +1,7 @@
 {% load review_extras %}
 <div class="ticket-preview">
     <div class="form" style="min-width: 30%">
-        <h3 style="margin: 1rem 0 2rem 0;">Vous avez publié une critique</h3>
-        <p style="align-self: flex-end;margin-right: 1rem">{{ review.time_created|date:'H:i, d F Y' }}</p>
-        <h3 style="margin-bottom: 2rem;">{{ review.headline }} - {% for star in review.rating|range_filter %}*
-        {% endfor %}</h3>
-        <p>{{ review.body }}</p>
-
-            {% include 'review/partials/ticket_preview.html' with ticket=review.ticket %}
-
+        {% include 'review/partials/review-view.html' %}
         <div class="ticket-preview-buttons">
             <a href="{% url 'review_edit' review.id %}" class="link-as-button link-edit">Modifier</a>
             <form method="post" action="{% url 'review_delete' review.id %}">

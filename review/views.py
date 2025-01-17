@@ -11,8 +11,22 @@ from .models import Ticket, Review
 
 @login_required
 def home(request):
+    current_user = request.user
+    print(current_user.username)
+    user_reviews = models.Review.objects.filter(user=current_user).select_related('user')
+    user_tickets = models.Ticket.objects.filter(user=current_user).select_related('user')
+    followed_reviews = models.Review.objects.filter(user__in=current_user.followed.all()).select_related('user')
+    followed_tickets = models.Ticket.objects.filter(user__in=current_user.followed.all()).select_related('user')
+    reviews_and_tickets = sorted(chain(user_reviews, user_tickets, followed_reviews, followed_tickets),
+                                 key=lambda x: x.time_created, reverse=True)
+    paginator = Paginator(reviews_and_tickets, 5)
+    number_page = request.GET.get('page')
+    page_obj = paginator.get_page(number_page)
 
-    return render(request, 'review/home.html')
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, 'review/home.html', context=context)
 
 
 @login_required
@@ -116,8 +130,8 @@ def delete_review(request, review_id):
 
 @login_required
 def view_posts(request):
-    reviews = models.Review.objects.filter(user=request.user).order_by('-time_created')
-    tickets = models.Ticket.objects.filter(user=request.user).order_by('-time_created')
+    reviews = models.Review.objects.filter(user=request.user).order_by('-time_created').select_related('user')
+    tickets = models.Ticket.objects.filter(user=request.user).order_by('-time_created').select_related('user')
     reviews_and_tickets = sorted(chain(reviews, tickets), key=lambda x: x.time_created, reverse=True)
     paginator = Paginator(reviews_and_tickets, 5)
     number_page = request.GET.get('page')
@@ -131,8 +145,8 @@ def view_posts(request):
 
 @login_required
 def following_users(request):
-    following = request.user.followed.all()
-    followers = request.user.followed_by.all()
+    following = request.user.followed.all().select_related('followed_user')
+    followers = request.user.followed_by.all().select_related('user')
     followers_usernames = [follower.user.username for follower in followers]
     form = forms.FollowUserForm(user=request.user)
     if request.method == "POST":
@@ -148,6 +162,7 @@ def following_users(request):
     }
 
     return render(request, 'review/following.html', context=context)
+
 
 @login_required
 def unfollow_user(request, username):

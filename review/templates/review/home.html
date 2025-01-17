@@ -6,13 +6,14 @@
         <a href="{% url 'review_create' %}" class="link-as-button">Créer une critique</a>
     </div>
     {% for instance in page_obj %}
-        <div class="post-container" style="{% if forloop.last %}margin-bottom: 2rem;
-            border-bottom: 1px solid black;{% endif %}">
-            {% if instance|model_type == 'Review' %}
-                {% include 'review/partials/posts_review.html' with review=instance %}
-            {% elif instance|model_type == 'Ticket' %}
-                {% include 'review/partials/posts_ticket.html' with ticket=instance %}
-            {% endif %}
+        <div class="post-container" style="margin-bottom: 1rem;border-bottom: 1px solid black;">
+            <div class="ticket-preview">
+                {% if instance|model_type == 'Review' %}
+                    {% include 'review/partials/review-view.html' with review=instance %}
+                {% elif instance|model_type == 'Ticket' %}
+                    {% include 'review/partials/ticket-view.html' with ticket=instance %}
+                {% endif %}
+            </div>
         </div>
     {% endfor %}
 {% endblock content %}

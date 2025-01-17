@@ -1,9 +1,6 @@
 <div class="ticket-preview">
     <div class="form" style="min-width: 30%">
-        <h3 style="margin: 1rem 0 2rem 0;">Vous avez publié un ticket</h3>
-        <p style="align-self: flex-end;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
-        <h3 style="margin-bottom: 2rem;">{{ ticket.title }}</h3>
-        <img src="{{ ticket.image.url }}" alt="{{ ticket.image.name }}">
+        {% include 'review/partials/ticket-view.html' %}
         <div class="ticket-preview-buttons">
             <a href="{% url 'ticket_edit' ticket.id %}" class="link-as-button link-edit">Modifier</a>
             <form method="post" action="{% url 'ticket_delete' ticket.id %}">
