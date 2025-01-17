@@ -124,6 +124,7 @@ button:hover {
 .form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .group > label {
@@ -184,7 +185,7 @@ button:hover {
     list-style-type: none;
     color: red;
     margin-left: 5px;
-    /*max-width: 15rem;*/
+    max-width: 30em;
     margin-top: 5px;
 }
 
