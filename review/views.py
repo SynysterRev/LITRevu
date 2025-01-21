@@ -16,16 +16,16 @@ def home(request):
     user_tickets = models.Ticket.objects.filter(user=current_user).select_related('user')
     followed_reviews = models.Review.objects.filter(user__in=current_user.followed.all()).select_related('user')
     followed_tickets = models.Ticket.objects.filter(user__in=current_user.followed.all()).select_related('user')
-    other_reviews =  models.Review.objects.filter(ticket__in=user_tickets).select_related('user')
+    other_reviews = models.Review.objects.filter(ticket__in=user_tickets).exclude(
+        id__in=user_reviews.values_list('id', flat=True)).select_related('user')
     reviews_and_tickets = sorted(chain(user_reviews, user_tickets, followed_reviews, followed_tickets, other_reviews),
                                  key=lambda x: x.time_created, reverse=True)
-    paginator = Paginator(reviews_and_tickets, 1)
+    paginator = Paginator(reviews_and_tickets, 5)
     number_page = request.GET.get('page')
     page_obj = paginator.get_page(number_page)
 
     context = {
         'page_obj': page_obj,
-        'total_pages': paginator.num_pages,
     }
     return render(request, 'review/home.html', context=context)
 
@@ -41,6 +41,7 @@ def ticket_create(request):
             ticket.save()
             return redirect('home')
     return render(request, 'review/create_ticket.html', context={'form': form})
+
 
 @login_required
 def ticket_edit(request, ticket_id):
@@ -104,6 +105,8 @@ def review_answer_create(request, ticket_id):
 @login_required
 def review_edit(request, review_id):
     review = get_object_or_404(Review, id=review_id)
+    if review.user != request.user:
+        return redirect('home')
     edit_form = forms.ReviewForm(instance=review)
     if request.method == "POST":
         edit_form = forms.ReviewForm(request.POST, request.FILES, instance=review)
@@ -165,9 +168,3 @@ def unfollow_user(request, username):
     if request.method == "POST":
         request.user.followed.remove(followed_user)
         return redirect('following')
-    # followed_user
-
-# @login_required
-# def review_view(request, review_id):
-#     review = get_object_or_404(models.Review, id=review_id)
-#     return render(request, 'review/view_posts.html', {'review': review})

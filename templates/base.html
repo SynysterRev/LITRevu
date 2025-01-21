@@ -20,6 +20,10 @@
                     <button type="submit">Se déconnecter</button>
                 </form>
             </nav>
+            <div>
+                <img src="{{ request.user.profile_picture.url }}" width="32px" height="32px" alt="Avatar"
+                     style="border-radius: 15px; margin-right: 1rem;">
+            </div>
         {% endif %}
     </div>
 </header>
