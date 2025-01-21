@@ -23,11 +23,11 @@
     </form>
     <h1 style="text-align: center; margin-top: 3rem;">Abonnements</h1>
     <div class="following-container">
-        {% for follow in following %}
+        {% for follow in following_usernames %}
             <div class="following-grid">
-                <div>{{ follow.username }}</div>
+                <div>{{ follow }}</div>
                 <div style="display:flex; justify-content: center">
-                    <form method="post" action="{% url 'unfollow' follow.username %}">
+                    <form method="post" action="{% url 'unfollow' follow %}">
                         {% csrf_token %}
                         <button type="submit" class="submit-button">
                             Désabonner

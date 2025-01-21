@@ -394,3 +394,12 @@ li {
 .home-create-buttons .link-as-button {
     width: 14rem;
 }
+
+.nav-row {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+.nav-row:hover {
+    text-decoration: underline;
+}

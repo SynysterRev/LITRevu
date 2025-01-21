@@ -12,19 +12,20 @@ from .models import Ticket, Review
 @login_required
 def home(request):
     current_user = request.user
-    print(current_user.username)
     user_reviews = models.Review.objects.filter(user=current_user).select_related('user')
     user_tickets = models.Ticket.objects.filter(user=current_user).select_related('user')
     followed_reviews = models.Review.objects.filter(user__in=current_user.followed.all()).select_related('user')
     followed_tickets = models.Ticket.objects.filter(user__in=current_user.followed.all()).select_related('user')
-    reviews_and_tickets = sorted(chain(user_reviews, user_tickets, followed_reviews, followed_tickets),
+    other_reviews =  models.Review.objects.filter(ticket__in=user_tickets).select_related('user')
+    reviews_and_tickets = sorted(chain(user_reviews, user_tickets, followed_reviews, followed_tickets, other_reviews),
                                  key=lambda x: x.time_created, reverse=True)
-    paginator = Paginator(reviews_and_tickets, 5)
+    paginator = Paginator(reviews_and_tickets, 1)
     number_page = request.GET.get('page')
     page_obj = paginator.get_page(number_page)
 
     context = {
         'page_obj': page_obj,
+        'total_pages': paginator.num_pages,
     }
     return render(request, 'review/home.html', context=context)
 
@@ -40,13 +41,6 @@ def ticket_create(request):
             ticket.save()
             return redirect('home')
     return render(request, 'review/create_ticket.html', context={'form': form})
-
-
-# @login_required
-# def ticket_view(request, ticket_id):
-#     ticket = get_object_or_404(Ticket, id=ticket_id)
-#     return render(request, 'review/view_posts.html', {'ticket': ticket})
-
 
 @login_required
 def ticket_edit(request, ticket_id):
@@ -145,7 +139,8 @@ def view_posts(request):
 
 @login_required
 def following_users(request):
-    following = request.user.followed.all().select_related('followed_user')
+    following = request.user.following.all().select_related('followed_user')
+    following_usernames = [follow.followed_user.username for follow in following]
     followers = request.user.followed_by.all().select_related('user')
     followers_usernames = [follower.user.username for follower in followers]
     form = forms.FollowUserForm(user=request.user)
@@ -156,7 +151,7 @@ def following_users(request):
             request.user.followed.add(user)
             return redirect('following')
     context = {
-        'following': following,
+        'following_usernames': following_usernames,
         'followers': followers_usernames,
         'form': form,
     }

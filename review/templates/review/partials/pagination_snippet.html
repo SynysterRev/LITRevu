@@ -1,0 +1,42 @@
+{% load static %}
+<script src="{% static 'js/utils.js' %}"></script>
+<span style="display: flex;flex-direction: column;align-items: center;margin-bottom: 2rem;">
+    <table style="border-spacing: 7px; font-size: 1.2rem; padding: 5px;">
+        <tbody>
+        <tr id="nav-row">
+        </tr>
+        </tbody>
+    </table>
+</span>
+
+<!-- Display a navigation menu for the flux. Current page is not clickable, display a maximum of ten pages at a time -->
+<script>
+    const navRow = document.getElementById("nav-row");
+    const maxDisplay = 10;
+    const totalPages = {{ page_obj.paginator.num_pages }};
+    <!-- We want the loop to increase its start and end depending on the current page number (like a Google search) -->
+    let startLoop = Math.min({{ page_obj.number }} - maxDisplay / 2.0, totalPages - maxDisplay);
+    startLoop = clamp(startLoop, 0, totalPages - maxDisplay);
+    const endLoop = clamp(startLoop + Math.min(maxDisplay, totalPages), 1, totalPages);
+    {% if page_obj.has_previous %}
+        let tdPrevious = document.createElement("td");
+        tdPrevious.innerHTML = '' +
+            '<a href="?page={{ page_obj.previous_page_number }}" class="nav-row" style="padding-right:10px;">Précédente</a>'
+        navRow.appendChild(tdPrevious);
+    {% endif %}
+    for (let i = startLoop; i < endLoop; ++i) {
+        let td = document.createElement("td");
+        td.style.textAlign = "center";
+        if (i + 1 === {{ page_obj.number }}) {
+            td.innerHTML = `<span>${i + 1}<span/>`
+        } else {
+            td.innerHTML = `<a href='?page=${i + 1}' class='nav-row' >${i + 1}<a/>`
+        }
+        navRow.appendChild(td);
+    }
+    {% if page_obj.has_next %}
+        let tdNext = document.createElement("td");
+        tdNext.innerHTML = '<a href="?page={{ page_obj.next_page_number }}" class="nav-row" style="padding-left:10px;">Suivante</a>'
+        navRow.appendChild(tdNext);
+    {% endif %}
+</script>

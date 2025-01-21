@@ -12,8 +12,14 @@
                     {% include 'review/partials/review-view.html' with review=instance %}
                 {% elif instance|model_type == 'Ticket' %}
                     {% include 'review/partials/ticket-view.html' with ticket=instance %}
+                    {% if instance.has_no_review %}
+                        <a href="{% url 'review_answer_create' instance.id %}"
+                           style="align-self: flex-end;margin-bottom: 1rem"
+                           class="link-as-button">Créer une critique</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
     {% endfor %}
+    {% include 'review/partials/pagination_snippet.html' %}
 {% endblock content %}
