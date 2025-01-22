@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load review_extras %}
+{% block content %}
+    {% if users %}
+        <div style="display: flex; flex-direction: column; align-items: center">
+            {% for searched_user in users %}
+                <div class="search-container">
+                    <div style="display: flex; align-items: center; padding: 10px; width: 100%">
+                        <img src="{{ user.profile_picture.url }}" width="32px" height="32px" alt="Avatar"
+                             style="border-radius: 15px; margin-right: 1.5rem;">
+                        {{ searched_user.username }}
+                        {% if not searched_user.followed_by_user %}
+                            <button type="submit" class="submit-button" id="follow-btn" style="margin-left: auto"
+                                    data-username="{{ searched_user.username }}">
+                                S'abonner
+                            </button>
+                        {% else %}
+                            <div style="margin-left: auto;padding-right: 5px;">
+                                <div type="submit" class="already-follow">
+                                    Abonné
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="display: flex; justify-content: center; align-items: center;margin-top: 220px">
+            <h2>Aucun résultat n'a été trouvé.</h2>
+        </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const followButtons = document.querySelectorAll('#follow-btn');
+            followButtons.forEach(button => {
+                button.addEventListener('click', event => {
+                    event.preventDefault();
+
+                    const username = button.dataset.username;
+                    const jsonData = {username: username};
+                    fetch("{% url 'follow' %}", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "X-CSRFToken": "{{ csrf_token }}",
+                        },
+                        body: JSON.stringify(jsonData),
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === "success") {
+                                // Change le bouton en "Abonné"
+                                button.outerHTML = `
+                            <div class="already-follow" style="margin-left: auto; padding-right: 5px;">
+                                Abonné
+                            </div>
+                        `;
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Erreur:", error);
+                        });
+                });
+            });
+        });
+    </script>
+{% endblock content %}

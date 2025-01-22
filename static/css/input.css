@@ -8,10 +8,15 @@
     height: 3rem;
 }
 
+/*body {*/
+/*     background-color: ghostwhite;*/
+/*}*/
+
 * {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+
 }
 
 div, input {
@@ -225,7 +230,6 @@ li {
 
 .submit-button {
     min-width: 8rem;
-    /*margin-top: 1rem;*/
     line-height: 2rem;
     font-size: 1.2rem;
 }
@@ -482,4 +486,23 @@ li {
 
 .hide {
     display: none;
+}
+
+.search-container {
+    border-radius: 15px;
+    background-color: gainsboro;
+    height: 80px;
+    width: 25%;
+    display: flex;
+    box-shadow: 2px 2px 2px darkgray;
+}
+
+.search-container:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.already-follow {
+    padding: 5px;
+    color: cornflowerblue;
+    text-align: center;
 }

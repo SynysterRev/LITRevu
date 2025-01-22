@@ -22,3 +22,7 @@ def get_poster_name(context, user):
 @register.filter
 def range_filter(value):
     return range(value)
+
+@register.filter
+def is_array_filled(array):
+    return len(array) > 0

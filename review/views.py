@@ -1,10 +1,13 @@
+import json
 from itertools import chain
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Exists, OuterRef
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
-from authentication.models import User
+from authentication.models import User, UserFollows
 from . import forms, models
 from .models import Ticket, Review
 
@@ -146,17 +149,10 @@ def following_users(request):
     following_usernames = [follow.followed_user.username for follow in following]
     followers = request.user.followed_by.all().select_related('user')
     followers_usernames = [follower.user.username for follower in followers]
-    form = forms.FollowUserForm(user=request.user)
-    if request.method == "POST":
-        form = forms.FollowUserForm(request.POST, user=request.user)
-        if form.is_valid():
-            user = get_object_or_404(User, username=form.cleaned_data['username'])
-            request.user.followed.add(user)
-            return redirect('following')
+
     context = {
         'following_usernames': following_usernames,
         'followers': followers_usernames,
-        'form': form,
     }
 
     return render(request, 'review/following.html', context=context)
@@ -168,3 +164,27 @@ def unfollow_user(request, username):
     if request.method == "POST":
         request.user.followed.remove(followed_user)
         return redirect('following')
+
+
+@login_required
+def search_user(request):
+    username = request.GET.get('username')
+    users = User.objects.filter(username__icontains=username).exclude(id=request.user.id).annotate(
+        followed_by_user=Exists(
+        UserFollows.objects.filter(user=request.user, followed_user=OuterRef('pk')))) if username else []
+    context = {
+        'users': users,
+    }
+    return render(request, 'review/search.html', context=context)
+
+
+@login_required
+def follow_user(request):
+    if request.method == "POST":
+        json_data = json.loads(request.body)
+        username = json_data.get('username')
+        followed_user = get_object_or_404(User, username=username)
+        if followed_user:
+            request.user.followed.add(followed_user)
+            return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "invalid_request"}, status=400)

@@ -1,23 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1 style="text-align: center;">Suivre d'autres utilisateurs</h1>
-    <form method="POST" class="following-container">
-        {% csrf_token %}
+    <form method="GET" class="following-container" action="{% url 'search' %}">
         <div class="search-user-container">
             <div class="field-container">
-                {% for field in form %}
-                    <div class="input-group">
-                        {{ field }}
-                        <ul class="error-list">
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endfor %}
+                <input type="text" id="id_username"
+                       name="username" class="search-input" placeholder="Nom d'utilisateur"/>
             </div>
             <button type="submit" style="align-self: flex-end; margin-left: auto"
-                    class="submit-button">Envoyer
+                    class="submit-button" id="search-btn">Envoyer
             </button>
         </div>
     </form>
@@ -45,4 +36,11 @@
             </div>
         {% endfor %}
     </div>
+    <script>
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) { // La page a été chargée depuis le cache
+            window.location.reload(); // Recharger la page
+        }
+    });
+</script>
 {% endblock content %}

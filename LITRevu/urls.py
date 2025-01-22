@@ -45,6 +45,8 @@ urlpatterns = [
     path('ticket/<int:ticket_id>/delete/', review.views.delete_ticket, name='ticket_delete'),
     path('following/', review.views.following_users, name='following'),
     path('unfollow/<str:username>/', review.views.unfollow_user, name='unfollow'),
+    path('search/', review.views.search_user, name='search'),
+    path('follow/', review.views.follow_user, name='follow'),
 
 ]
 
