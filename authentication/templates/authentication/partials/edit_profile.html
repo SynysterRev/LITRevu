@@ -1,0 +1,128 @@
+<div class="edit-container-centered">
+    <div class="edit-container">
+        <div style="display: flex; width: 100%; align-items: center; justify-content: center; position: relative">
+            <h2>Photo de profil</h2>
+            <div class="close-edit" aria-label="Fermer">
+                <p style="font-size: 25px">X</p>
+            </div>
+        </div>
+        <div class="edit-picture-form">
+            <div class="select-picture-container">
+                <div class="picture-container hide">
+                    <div style="max-width: 100%; max-height: 100%;">
+                        <img src="" alt="" id="image_dl"
+                             style="max-width: 700px; max-height: 420px; object-fit: contain">
+                    </div>
+                </div>
+                <label for="id_{{ widget.name }}" class="image-download-button" style="align-self: center;
+                    margin-right:0">Importer photo</label>
+                <input type="file" id="id_{{ widget.name }}"
+                       name="{{ widget.name }}" style="display: none" class="image-download-button">
+            </div>
+            <div style="padding: 5px 0" id="message"></div>
+            <button id="update-profile" type="submit" class="submit-button" style="margin-top: auto; margin-left:
+            auto">Mettre à jour
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Use to display the selected file name under the download button
+    and the image above it -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
+<script>
+    const fileInput = document.getElementById('id_{{ widget.name }}');
+    const image = document.getElementById('image_dl');
+    const profilePicture = document.getElementById('user-profile-picture');
+    const responseMessage = document.getElementById('message');
+    const pictureContainer = document.querySelector(".picture-container");
+    let cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 1,
+
+        ready: function () {
+            croppable = true;
+        },
+    });
+    fileInput.addEventListener('change', function () {
+
+        const selectedFile = fileInput.files[0];
+        if (selectedFile) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                image.src = e.target.result;
+                cropper.replace(e.target.result);
+                if (pictureContainer.classList.contains("hide"))
+                    pictureContainer.classList.remove("hide");
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            image.alt = ''
+        }
+    });
+
+    function getRoundedCanvas(sourceCanvas) {
+        let canvas = document.createElement('canvas');
+        let context = canvas.getContext('2d');
+        let width = sourceCanvas.width;
+        let height = sourceCanvas.height;
+        canvas.width = width;
+        canvas.height = height;
+        context.imageSmoothingEnabled = true;
+        context.drawImage(sourceCanvas, 0, 0, width, height);
+        context.globalCompositeOperation = 'destination-in';
+        context.beginPath();
+        context.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, 2 * Math.PI, true);
+        context.fill();
+        return canvas;
+    }
+
+    let button = document.getElementById("update-profile");
+    button.addEventListener("click", (event) => {
+        event.preventDefault();
+        let croppedCanvas;
+        let roundedCanvas;
+
+        if (!croppable) {
+            return;
+        }
+
+        // Crop
+        croppedCanvas = cropper.getCroppedCanvas({width: 300, height: 300});
+        roundedCanvas = getRoundedCanvas(croppedCanvas);
+
+        const jsonData = {profile_picture: roundedCanvas.toDataURL("image/png")};
+        fetch("{% url 'update_profile_picture' %}", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                "X-CSRFToken": "{{ csrf_token }}",
+            },
+            body: JSON.stringify(jsonData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    profilePicture.src = data.new_image_url;
+                    responseMessage.innerText = "Image mise à jour avec succès."
+                    responseMessage.style.color = "blue";
+                } else {
+                    responseMessage.innerText = "Une erreur s'est produite."
+                    responseMessage.style.color = "red";
+                }
+            })
+            .catch(error => {
+                console.error("Erreur:", error);
+            });
+    });
+    const closeEdit = document.querySelector(".close-edit");
+    closeEdit.addEventListener("click", (event) => {
+        if (!editPictureContainer.classList.contains("hide"))
+            editPictureContainer.classList.add("hide");
+        responseMessage.innerText = "";
+        if (!pictureContainer.classList.contains("hide"))
+        {
+            pictureContainer.classList.add("hide")
+        }
+    });
+</script>

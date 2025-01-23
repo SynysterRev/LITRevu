@@ -6,48 +6,56 @@
     <title>LITRevu</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/input.css' %}" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.css">
 </head>
 <header>
-<div style="position: fixed; top: 0;width: 100%">
-    <div class="header-container">
-        <h2 class="site-title">LITRevu</h2>
-        {% if request.user.is_authenticated %}
-            <nav class="site-nav">
-                <a href="{% url 'home' %}"> Flux</a>
-                <a href="{% url 'posts_view' %}"> Posts</a>
-                <a href="{% url 'following' %}"> Abonnements</a>
-            </nav>
-            <div>
-                <button class="profile-button" id="profile-button">
-                    <img src="{{ request.user.profile_picture.url }}" width="32px" height="32px" alt="Avatar"
-                         style="border-radius: 15px; ">
-                </button>
-            </div>
-            <div class="profile-container hide" id="profile-container">
-                <div class="dropdown-profile-container">
-                    <div class="dropdown-container">
-                        <div class="dropdown-profile-header">
-                            <img src="{{ request.user.profile_picture.url }}" width="32px" height="32px" alt="Avatar"
-                                 style="border-radius: 15px; margin-right: 1.5rem;">
-                            <div>{{ request.user.username }}</div>
+    <div style="position: fixed; top: 0;width: 100%">
+        <div class="header-container">
+            <h2 class="site-title">LITRevu</h2>
+            {% if request.user.is_authenticated %}
+                <nav class="site-nav">
+                    <a href="{% url 'home' %}"> Flux</a>
+                    <a href="{% url 'posts_view' %}"> Posts</a>
+                    <a href="{% url 'following' %}"> Abonnements</a>
+                </nav>
+                <div>
+                    <button class="profile-button" id="profile-button">
+                        <img src="{{ request.user.profile_picture.url }}" width="32px" height="32px" alt="Avatar"
+                             style="border-radius: 15px;" id="user-profile-picture">
+                    </button>
+                </div>
+                <div class="profile-container hide" id="profile-container">
+                    <div class="dropdown-profile-container">
+                        <div class="dropdown-container">
+                            <div class="dropdown-profile-header">
+                                <div class="edit-picture">
+                                    <img src="{{ request.user.profile_picture.url }}" width="64px" height="64px"
+                                         alt="Avatar"
+                                         style="border-radius: 50%;">
+                                    <div style="position: absolute; bottom: 3px; right: 3px; ">
+                                        <div class="edit-background"></div>
+                                        <img src="{% static 'images/edit.png' %}" alt="Edit" width="16px"
+                                             height="16px" style="position: absolute; bottom: 0">
+                                    </div>
+                                </div>
+                                <div>{{ request.user.username }}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="dropdown-container">
-                        <div>
-                            <a href="{% url 'home' %}" class="profile-container-link"> Profil</a>
+                        <div class="dropdown-container">
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="profile-container-button">Se déconnecter</button>
+                            </form>
                         </div>
-                    </div>
-                    <div class="dropdown-container">
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button type="submit" class="profile-container-button">Se déconnecter</button>
-                        </form>
                     </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
+{##}
+    <div id="edit-picture-container" class="hide">
+        {% include 'authentication/partials/edit_profile.html' %}
+    </div>
     <script>
         const dropdownProfileBtn = document.getElementById("profile-button");
         dropdownProfileBtn.addEventListener("click", (event) => {
@@ -65,11 +73,18 @@
                 profileContainer.classList.add("hide");
             }
         });
+
+        const editPicture = document.querySelector(".edit-picture");
+        const editPictureContainer = document.getElementById("edit-picture-container");
+        editPicture.addEventListener("click", (event) => {
+            if (editPictureContainer.classList.contains("hide"))
+                editPictureContainer.classList.remove("hide");
+        })
     </script>
 </header>
 <body>
 <div style="margin-top: 6rem;">
-{% block content %}{% endblock content %}
+    {% block content %}{% endblock content %}
 </div>
 </body>
 </html>

@@ -50,13 +50,11 @@
                     })
                         .then(response => response.json())
                         .then(data => {
-                            if (data.status === "success") {
+                            if (data.success === "success") {
                                 // Change le bouton en "Abonné"
                                 button.outerHTML = `
-                            <div class="already-follow" style="margin-left: auto; padding-right: 5px;">
-                                Abonné
-                            </div>
-                        `;
+                            <div class="already-follow" style="margin-left: auto; padding-right: 5px;">Abonné
+                            </div>`;
                             }
                         })
                         .catch(error => {
