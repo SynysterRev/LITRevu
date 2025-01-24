@@ -9,11 +9,14 @@
                 <div class="review-border" style="margin: 2rem;padding: 0">
                     <div class="review-ticket-preview">
                         <p>{% get_poster_display ticket.user %} demandé une critique</p>
-                        <p style="margin-left: auto;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
+                        <p style="margin-left: auto;font-size: 15px;"
+                        >{{ ticket.time_created|date:'H:i, d F Y' }}</p>
                     </div>
                     <p style="margin-top: 1.5rem">{{ ticket.title }}</p>
                     <p style="margin-top: 1.5rem">{{ ticket.description }}</p>
+                    {% if ticket.image %}
                     <img src="{{ ticket.image.url }}" alt="{{ ticket.image.name }}" class="review-ticket-preview-img">
+                    {% endif %}
                 </div>
             </div>
         </div>

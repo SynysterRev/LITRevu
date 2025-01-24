@@ -28,7 +28,8 @@
                     <div class="dropdown-profile-container">
                         <div class="dropdown-container">
                             <div class="dropdown-profile-header">
-                                <div class="edit-picture">
+                                <div class="edit-picture" role="button" aria-label="Edit photo de profil"
+                                     tabindex="0">
                                     <img src="{{ request.user.profile_picture.url }}" width="64px" height="64px"
                                          alt="Avatar"
                                          style="border-radius: 50%;">
@@ -52,34 +53,40 @@
             {% endif %}
         </div>
     </div>
-{##}
     <div id="edit-picture-container" class="hide">
         {% include 'authentication/partials/edit_profile.html' %}
     </div>
     <script>
         const dropdownProfileBtn = document.getElementById("profile-button");
-        dropdownProfileBtn.addEventListener("click", (event) => {
-            let profileContainer = document.getElementById("profile-container");
-            if (profileContainer.classList.contains("hide")) {
-                profileContainer.classList.remove("hide");
-            } else {
-                profileContainer.classList.add("hide");
-            }
-            event.stopPropagation();
-        });
+        let profileContainer = document.getElementById("profile-container");
+        if(dropdownProfileBtn) {
+            dropdownProfileBtn.addEventListener("click", (event) => {
+                if (profileContainer) {
+                    if (profileContainer.classList.contains("hide")) {
+                        profileContainer.classList.remove("hide");
+                    } else {
+                        profileContainer.classList.add("hide");
+                    }
+                }
+                event.stopPropagation();
+            });
+        }
         document.addEventListener("click", () => {
-            let profileContainer = document.getElementById("profile-container");
-            if (!profileContainer.classList.contains("hide")) {
+
+            if (profileContainer && !profileContainer.classList.contains("hide")) {
                 profileContainer.classList.add("hide");
             }
         });
 
         const editPicture = document.querySelector(".edit-picture");
-        const editPictureContainer = document.getElementById("edit-picture-container");
-        editPicture.addEventListener("click", (event) => {
-            if (editPictureContainer.classList.contains("hide"))
-                editPictureContainer.classList.remove("hide");
-        })
+        if (editPicture) {
+            editPicture.addEventListener("click", (event) => {
+                if (editPictureContainer) {
+                    if (editPictureContainer.classList.contains("hide"))
+                        editPictureContainer.classList.remove("hide");
+                }
+            });
+        }
     </script>
 </header>
 <body>

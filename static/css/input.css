@@ -243,7 +243,7 @@ li {
 .radio-control {
     display: flex;
     flex-direction: row;
-    margin-left: 2rem;
+    /*margin-left: 2rem;*/
     font-size: 1.2rem;
 }
 
@@ -258,6 +258,14 @@ li {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.ticket-preview p {
+    padding: 0 3px;
+}
+
+.ticket-preview h3 {
+    padding: 0 3px;
 }
 
 .ticket-preview img {
@@ -296,7 +304,6 @@ li {
 }
 
 .review-ticket-preview-img {
-    width: 100%;
     max-width: 400px;
     max-height: 400px;
     padding: 1.5rem;
@@ -401,7 +408,7 @@ li {
 
 .nav-row {
     text-decoration: none;
-    color: cornflowerblue;
+    color: royalblue;
 }
 
 .nav-row:hover {
@@ -506,7 +513,7 @@ li {
 
 .already-follow {
     padding: 5px;
-    color: cornflowerblue;
+    color: blue;
     text-align: center;
 }
 
@@ -602,4 +609,18 @@ li {
     flex-direction: column;
     align-items: center;
     gap: 15px;
+}
+
+.visually-hidden {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    white-space: nowrap;
 }

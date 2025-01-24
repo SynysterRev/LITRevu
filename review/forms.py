@@ -40,4 +40,4 @@ class ReviewForm(forms.ModelForm):
             (3, '3'),
             (4, '4'),
             (5, '5'),
-        ], attrs={'title': "Note"})
+        ], attrs={'title': "Note", })

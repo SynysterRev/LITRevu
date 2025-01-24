@@ -3,7 +3,7 @@
     <div class="review-ticket-preview">
         <p>{% if answer %} {% get_poster_display ticket.user %} demandé une critique {% elif not answer %}Ticket -
             {% get_poster_name ticket.user %}{% endif %} </p>
-        <p style="margin-left: auto;margin-right: 1rem">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
+        <p style="margin-left: auto;font-size: 15px;">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
     </div>
     <p style="margin-top: 1.5rem">{{ ticket.title }}</p>
     {% if ticket.image %}
