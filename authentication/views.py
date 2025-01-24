@@ -37,11 +37,3 @@ def update_profile_picture(request):
             return JsonResponse({"success": True,
                                  "new_image_url": user.profile_picture.url})
     return JsonResponse({"success": False}, status=400)
-
-# json_data = json.loads(request.body)
-#         username = json_data.get('username')
-#         followed_user = get_object_or_404(User, username=username)
-#         if followed_user:
-#             request.user.followed.add(followed_user)
-#             return JsonResponse({"status": "success"})
-#     return JsonResponse({"status": "invalid_request"}, status=400)
