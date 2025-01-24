@@ -33,8 +33,9 @@
             <h2>Aucun résultat n'a été trouvé.</h2>
         </div>
         <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
-            <a href="{% url 'following' %}" class="link-as-button" role="button" aria-label="Retour à la page précédente"
-            style="margin-right: 0">Retour</a>
+            <a href="{% url 'following' %}" class="link-as-button" role="button"
+               aria-label="Retour à la page précédente"
+               style="margin-right: 0">Retour</a>
         </div>
     {% endif %}
 
@@ -58,7 +59,7 @@
                         })
                             .then(response => response.json())
                             .then(data => {
-                                if (data.success === "success") {
+                                if (data.status === "success") {
                                     button.outerHTML = `
                             <div class="already-follow" style="margin-left: auto; padding-right: 5px;">Abonné
                             </div>`;

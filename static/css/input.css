@@ -296,6 +296,18 @@ li {
     margin: 0 1rem 1rem 0;
 }
 
+.ticket-preview-description {
+    max-width: 400px;
+    margin-top: 1.5rem;
+    word-wrap: break-word;
+}
+
+.ticket-preview-title {
+    max-width: 400px;
+    margin-top: 1.5rem;
+    word-wrap: break-word;
+}
+
 .review-edit {
     border: 1px solid black;
 }
@@ -475,7 +487,6 @@ li {
     display: flex;
     flex-direction: column;
     padding: 15px;
-    max-height: 100px;
     align-items: center;
     gap: 15px;
 }

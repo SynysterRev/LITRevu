@@ -1,7 +1,8 @@
 {% load review_extras %}
 <h3 style="margin: 1rem 0 2rem 0;">{% get_poster_display ticket.user %} demandé une critique</h3>
 <p style="align-self: flex-end;font-size: 15px;">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
-<h3 style="margin-bottom: 2rem;">{{ ticket.title }}</h3>
+<h3 style="margin-bottom: 1rem;">{{ ticket.title }}</h3>
+<p class="ticket-preview-description" style="margin-bottom: 2rem;">{{ ticket.description }}</p>
 {% if ticket.image %}
     <img src="{{ ticket.image.url }}" alt="Image du ticket" style="margin-bottom: 1rem">
 {% endif %}
