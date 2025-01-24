@@ -561,7 +561,6 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*transform: translate(125%, 50%);*/
 }
 
 .picture-container {

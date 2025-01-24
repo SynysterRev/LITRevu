@@ -11,7 +11,7 @@
 
 <!-- Display a navigation menu for the flux. Current page is not clickable, display a maximum of ten pages at a time -->
 <script>
-    {% if page_obj.paginator.num_pages > 0  %}
+    {% if page_obj.paginator.num_pages > 1  %}
         const navRow = document.getElementById("nav-row");
         const maxDisplay = 10;
         const totalPages = {{ page_obj.paginator.num_pages }};

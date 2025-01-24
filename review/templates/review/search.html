@@ -7,7 +7,8 @@
                 <div class="search-container">
                     <div style="display: flex; align-items: center; padding: 10px; width: 100%">
                         {% if searched_user.profile_picture %}
-                            <img src="{{ searched_user.profile_picture.url }}" width="32px" height="32px" alt="Avatar"
+                            <img src="{{ searched_user.profile_picture.url }}" width="32px" height="32px" alt="Photo
+                            de profil"
                                  style="border-radius: 15px; margin-right: 1.5rem;">
                         {% endif %}
                         {{ searched_user.username }}
@@ -30,6 +31,10 @@
     {% else %}
         <div style="display: flex; justify-content: center; align-items: center;margin-top: 220px">
             <h2>Aucun résultat n'a été trouvé.</h2>
+        </div>
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 50px;">
+            <a href="{% url 'following' %}" class="link-as-button" role="button" aria-label="Retour à la page précédente"
+            style="margin-right: 0">Retour</a>
         </div>
     {% endif %}
 
@@ -54,7 +59,6 @@
                             .then(response => response.json())
                             .then(data => {
                                 if (data.success === "success") {
-                                    // Change le bouton en "Abonné"
                                     button.outerHTML = `
                             <div class="already-follow" style="margin-left: auto; padding-right: 5px;">Abonné
                             </div>`;

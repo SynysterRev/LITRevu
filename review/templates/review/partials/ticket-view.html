@@ -3,5 +3,5 @@
 <p style="align-self: flex-end;font-size: 15px;">{{ ticket.time_created|date:'H:i, d F Y' }}</p>
 <h3 style="margin-bottom: 2rem;">{{ ticket.title }}</h3>
 {% if ticket.image %}
-    <img src="{{ ticket.image.url }}" alt="{{ ticket.image.name }}" style="margin-bottom: 1rem">
+    <img src="{{ ticket.image.url }}" alt="Image du ticket" style="margin-bottom: 1rem">
 {% endif %}

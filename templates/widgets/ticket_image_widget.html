@@ -1,6 +1,6 @@
 <label style="font-size: xx-large; margin: 1rem 0">{{ widget.attrs.title }}</label>
 <div style="width: 100%; max-width: 400px; max-height: 400px; padding-bottom: 5px;">
-    <img src="{{ widget.value.url }}" alt="ticket-image-preview" id="image_dl" width="auto" height="100%">
+    <img src="{{ widget.value.url }}" alt="" id="image_dl" width="auto" height="100%">
 </div>
 <label for="id_{{ widget.name }}" class="image-download-button" role="button" aria-label="Télécharger fichier"
        tabindex="0">Télécharger fichier</label>
@@ -21,7 +21,9 @@
                 reader.onload = function (e) {
                     if (image) {
                         image.src = e.target.result;
-                    }                };
+                        image.alt = "Preview de l'image de la critique"
+                    }
+                };
                 reader.readAsDataURL(selectedFile);
             } else {
             }
