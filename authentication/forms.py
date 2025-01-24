@@ -20,5 +20,4 @@ class SignupForm(UserCreationForm):
 
 class LoginForm(AuthenticationForm):
     username = UsernameField(widget=InputWidget(attrs={'title': "Nom d'utilisateur", 'type_input': "text"}))
-    password = forms.CharField(widget=InputWidget(attrs={'title': "Mot de passe", 'type_input': "password"}),
-                               error_messages={'required': "Ce champ est obligatoire"})
+    password = forms.CharField(widget=InputWidget(attrs={'title': "Mot de passe", 'type_input': "password"}))

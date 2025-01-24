@@ -84,6 +84,7 @@ button:hover {
 }
 
 .login-login {
+    overflow: visible;
 }
 
 .link-as-button {
@@ -129,6 +130,7 @@ button:hover {
 .form {
     display: flex;
     flex-direction: column;
+    overflow: visible;
 }
 
 .form-signup {
@@ -197,6 +199,7 @@ button:hover {
     margin-left: 5px;
     max-width: 30em;
     margin-top: 5px;
+    overflow: visible;
 }
 
 li {
@@ -622,4 +625,9 @@ li {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
     white-space: nowrap;
+}
+
+.error-message {
+    width: 400px;
+    position: relative;
 }
