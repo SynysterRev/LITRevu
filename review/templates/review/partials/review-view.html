@@ -1,7 +1,7 @@
 {% load review_extras %}
 <h3 style="margin: 1rem 0 2rem 0;">{% get_poster_display review.user %} publié une critique</h3>
 <p style="align-self: flex-end;font-size: 15px;">{{ review.time_created|date:'H:i, d F Y' }}</p>
-<h3 style="margin-bottom: 2rem;">{{ review.headline }} - {% for star in review.rating|range_filter %}*
+<h3 style="margin-bottom: 2rem;">{{ review.headline }} - {% for star in review.rating|range_filter %}&#9733;
 {% endfor %}</h3>
 <p>{{ review.body }}</p>
 

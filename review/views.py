@@ -3,7 +3,7 @@ from itertools import chain
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.db.models import Exists, OuterRef
+from django.db.models import Exists, OuterRef, Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -21,7 +21,7 @@ def home(request):
     followed_reviews = models.Review.objects.filter(user__in=current_user.followed.all()).select_related('user')
     followed_tickets = models.Ticket.objects.filter(user__in=current_user.followed.all()).select_related('user')
     other_reviews = models.Review.objects.filter(ticket__in=user_tickets).exclude(
-        id__in=user_reviews.values_list('id', flat=True)).select_related('user')
+        Q(id__in=user_reviews.values_list('id', flat=True)) | Q(id__in=followed_reviews.values_list('id', flat=True))).select_related('user')
     reviews_and_tickets = sorted(chain(user_reviews, user_tickets, followed_reviews, followed_tickets, other_reviews),
                                  key=lambda x: x.time_created, reverse=True)
     paginator = Paginator(reviews_and_tickets, 5)

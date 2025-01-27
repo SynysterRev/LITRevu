@@ -295,7 +295,7 @@ li {
 }
 
 .ticket-preview-description {
-    max-width: 400px;
+    /*max-width: 400px;*/
     margin-top: 1.5rem;
     word-wrap: break-word;
 }
@@ -317,7 +317,7 @@ li {
 }
 
 .review-ticket-preview-img {
-    max-width: 400px;
+    max-width: fit-content;
     max-height: 400px;
     padding: 1.5rem;
 }
