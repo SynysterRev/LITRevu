@@ -13,3 +13,11 @@
 # Utilisation
 Rendez-vous à l'adresse http://127.0.0.1:8000/. Puis créer un nouveau compte ou connectez-vous directement avec l'utilisateur "test", mot de passe "test0123". Cet utilisateur est également un superuser et peut accéder au panel admin : [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin/).
 Pour créer un superuser se référer à cette documentation : https://docs.djangoproject.com/en/5.1/intro/tutorial02/#creating-an-admin-user
+
+# Utilisateurs
+Voici une liste des noms d'utilisateurs déjà créés :
+- Leon
+- Chris
+- Claire
+- Sherry
+- Syndra
