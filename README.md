@@ -1,4 +1,6 @@
 # LITRevu
+
+Python version 3.12.6
  
 # Installation
 1. Clonez le dépôt ou télécharger une archive.
