@@ -1,5 +1,6 @@
 <div class="group">
     <label for="id_{{ widget.name }}">{{ widget.attrs.title }}</label>
     <input type="{{ widget.attrs.type_input }}" id="id_{{ widget.name }}"
-           name="{{ widget.name }}" class="input" value="{{ widget.attrs.value }}"/>
+           name="{{ widget.name }}" class="input" {% if widget.attrs.value %}value=
+                   "{{ widget.attrs.value }}" {% endif %}>
 </div>

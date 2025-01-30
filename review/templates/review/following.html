@@ -6,7 +6,8 @@
             <div class="field-container">
                 <label class="visually-hidden" for="id_username"></label>
                 <input type="text" id="id_username"
-                       name="username" class="search-input" placeholder="Nom d'utilisateur"/>
+                       name="username" class="search-input"
+                       placeholder="Nom d'utilisateur">
             </div>
             <button type="submit" style="align-self: flex-end; margin-left: auto"
                     class="submit-button" id="search-btn">Envoyer
@@ -38,10 +39,10 @@
         {% endfor %}
     </div>
     <script>
-    window.addEventListener('pageshow', (event) => {
-        if (event.persisted) {
-            window.location.reload();
-        }
-    });
-</script>
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
 {% endblock content %}

@@ -30,7 +30,7 @@ def home(request):
         user__in=current_user.followed.all()
     ).select_related("user")
     other_reviews = (
-        models.Review.objects.filter(ticket__in=user_tickets)
+        models.Review.objects.filter(Q(ticket__in=user_tickets) | Q(ticket__in=followed_tickets))
         .exclude(
             Q(id__in=user_reviews.values_list("id", flat=True))
             | Q(id__in=followed_reviews.values_list("id", flat=True))

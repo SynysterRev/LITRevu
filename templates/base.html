@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/input.css' %}" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.css">
 </head>
+
+<body>
 <header>
     <div style="position: fixed; top: 0;width: 100%">
         <div class="header-container">
@@ -20,7 +22,7 @@
                 </nav>
                 <div>
                     <button class="profile-button" id="profile-button">
-                        <img src="{{ request.user.profile_picture.url }}" width="32px" height="32px" alt="Photo de
+                        <img src="{{ request.user.profile_picture.url }}" width="32" height="32" alt="Photo de
                         profil"
                              style="border-radius: 15px;" id="user-profile-picture">
                     </button>
@@ -31,13 +33,13 @@
                             <div class="dropdown-profile-header">
                                 <div class="edit-picture" role="button" aria-label="Edit photo de profil"
                                      tabindex="0">
-                                    <img src="{{ request.user.profile_picture.url }}" width="64px" height="64px"
+                                    <img src="{{ request.user.profile_picture.url }}" width="64" height="64"
                                          alt="Photo de profil"
                                          style="border-radius: 50%;" id="edit-profile-picture">
                                     <div style="position: absolute; bottom: 3px; right: 3px; ">
                                         <div class="edit-background"></div>
-                                        <img src="{% static 'images/edit.png' %}" alt="Edit" width="16px"
-                                             height="16px" style="position: absolute; bottom: 0">
+                                        <img src="{% static 'images/edit.png' %}" alt="Edit" width="16"
+                                             height="16" style="position: absolute; bottom: 0">
                                     </div>
                                 </div>
                                 <div style="max-width: 95%;word-wrap: break-word;">{{ request.user.username }}</div>
@@ -90,7 +92,6 @@
         }
     </script>
 </header>
-<body>
 <div style="margin-top: 6rem;">
     {% block content %}{% endblock content %}
 </div>

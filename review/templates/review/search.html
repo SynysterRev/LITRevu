@@ -7,19 +7,20 @@
                 <div class="search-container">
                     <div style="display: flex; align-items: center; padding: 10px; width: 100%">
                         {% if searched_user.profile_picture %}
-                            <img src="{{ searched_user.profile_picture.url }}" width="32px" height="32px" alt="Photo
+                            <img src="{{ searched_user.profile_picture.url }}" width="32" height="32" alt="Photo
                             de profil"
                                  style="border-radius: 15px; margin-right: 1.5rem;">
                         {% endif %}
                         {{ searched_user.username }}
                         {% if not searched_user.followed_by_user %}
-                            <button type="submit" class="submit-button" id="follow-btn" style="margin-left: auto"
+                            <button type="submit" class="submit-button"
+                                    data-js="follow-btn" style="margin-left: auto"
                                     data-username="{{ searched_user.username }}">
                                 S'abonner
                             </button>
                         {% else %}
                             <div style="margin-left: auto;padding-right: 5px;">
-                                <div type="submit" class="already-follow">
+                                <div class="already-follow">
                                     Abonné
                                 </div>
                             </div>
@@ -41,7 +42,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const followButtons = document.querySelectorAll('#follow-btn');
+            const followButtons = document.querySelectorAll('[data-js="follow-btn"]');
             if (followButtons) {
                 followButtons.forEach(button => {
                     button.addEventListener('click', event => {
