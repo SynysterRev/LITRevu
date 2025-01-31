@@ -23,3 +23,4 @@ Voici une liste des noms d'utilisateurs déjà créés :
 - Claire
 - Sherry
 - Syndra
+Leur mot de passe est toujours le même "test0123"
