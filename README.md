@@ -1,6 +1,8 @@
 # LITRevu
 
 Python version 3.12.6
+
+LitRevu est une plateforme qui permet de publier une demande de critique pour un livre, un article ou tout autre contenu. Il offre également la possibilité de poster directement une critique et de répondre aux demandes des autres utilisateurs. Un système d'abonnement est disponible pour suivre vos auteurs de critiques préférés.
  
 # Installation
 1. Clonez le dépôt ou télécharger une archive.
